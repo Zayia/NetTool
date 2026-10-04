@@ -60,17 +60,12 @@
       console.log("[中国联通] 本次请求缺少 ecs_token 或 ecs_acc，保留已有凭据。");
       return;
     }
-    const loginType = fields.login_type || "01";
-    if (loginType !== "01") {
-      console.log("[中国联通] 本次不是手机登录类型，保留已有凭据。");
-      return;
-    }
-
     const parts = [
       "ecs_token=" + fields.ecs_token,
       "ecs_acc=" + fields.ecs_acc,
-      "login_type=" + loginType,
     ];
+    // 保留抓取值，不限制为 01；空值原样保留，缺失时不补造字段。
+    if (typeof fields.login_type === "string") parts.push("login_type=" + fields.login_type);
     // 手机号用于话费 URL；不是额外的认证令牌。
     const mobile = [fields.c_mobile, fields.u_account].find((value) => /^1\d{10}$/.test(value || ""));
     if (mobile) parts.push("c_mobile=" + mobile);

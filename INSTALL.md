@@ -21,6 +21,8 @@ https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxj
 
 抓取后，在「Zayia 组件服务 → 中国联通 → 联通 Cookie」查看结果。
 
+抓取脚本 1.0.6 起保留请求中的 `login_type` 原值，包括 `06`、`19` 等，不再限制为 `01`，也不补默认值。更新客户端的模块、插件或重写资源后，重新打开联通 App 首页即可抓取；已有 Scripting 1.0.5 可继续使用。
+
 ```text
 持久化根键：ZayiaComponentService
 变量：@ZayiaComponentService.ChinaUnicom.Settings.Cookie
