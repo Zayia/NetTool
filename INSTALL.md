@@ -31,6 +31,8 @@ https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxj
 
 ## Scripting
 
+下载并导入：[中國聯通.scripting（1.0.4）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/Release/中國聯通.scripting)。
+
 中国联通 1.0.4 版的设置页已接入上述安装地址。读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
 
 ## 格式与验证说明
