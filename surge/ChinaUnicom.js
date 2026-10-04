@@ -1,13 +1,13 @@
 /*
  * Surge 请求头脚本。基于 ByteValley 中国联通组件服务的 BoxJS 数据结构。
  * 只保存小组件使用的字段，不修改请求、不输出凭据、不请求任何外部服务。
- * 持久化根键：ComponentService
- * BoxJS 字段：@ComponentService.ChinaUnicom.Settings.Cookie
+ * 持久化根键：ZayiaComponentService
+ * BoxJS 字段：@ZayiaComponentService.ChinaUnicom.Settings.Cookie
  */
 (function () {
   "use strict";
 
-  const ROOT_KEY = "ComponentService";
+  const ROOT_KEY = "ZayiaComponentService";
   const TARGET = /^https:\/\/m\.client\.10010\.com\/navigationService\/naviService\/hotRecommend(?:\?.*)?$/;
 
   function isObject(value) {
@@ -73,10 +73,10 @@
     root.ChinaUnicom = carrier;
     if (!$persistentStore.write(JSON.stringify(root), ROOT_KEY)) throw new Error("Write failed");
 
-    $notification.post("中国联通", "小组件凭据已更新", "已保存至 BoxJS 的中国联通 Cookie。");
+    $notification.post("中国联通", "小组件凭据已更新", "已保存至 BoxJS：Zayia 组件服务 → 中国联通（hotRecommend）→ 联通 Cookie。");
   } catch (_) {
     // 不输出异常对象，避免运行时错误附带 Cookie 或持久化内容。
-    console.log("[中国联通] 保存失败，请检查 ComponentService 数据格式及 Surge 持久化存储。");
+    console.log("[中国联通] 保存失败，请检查 ZayiaComponentService 数据格式及 Surge 持久化存储。");
   } finally {
     $done({});
   }
