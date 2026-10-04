@@ -2,14 +2,14 @@
   "id": "Zayia.ComponentService",
   "name": "Zayia 组件服务",
   "author": "@Zayia",
-  "description": "联通 hotRecommend 凭据采集，使用独立存储供 Scripting 小组件读取。",
+  "description": "联通登录凭据采集，使用独立存储供 Scripting 小组件读取。",
   "repo": "https://github.com/Zayia/NetTool",
   "apps": [
     {
       "id": "ZayiaComponentService.ChinaUnicom",
-      "name": "中国联通（hotRecommend）",
+      "name": "中国联通",
       "descs_html": [
-        "配合 Zayia 的 Surge 模块，从中国联通 App 的 <code>/navigationService/naviService/hotRecommend</code> 请求中提取 Cookie。",
+        "配合 Zayia 的 Surge 模块，在打开中国联通 App 首页时自动提取登录 Cookie。",
         "<b>使用方法：</b>启用新版 Surge 模块及 MITM 后，打开联通 App 首页，触发目标请求。成功后会自动保存 <code>ecs_token</code>、<code>ecs_acc</code>、<code>login_type=01</code>；有手机号和版本时也会保留。",
         "<b>独立变量：</b><code>@ZayiaComponentService.ChinaUnicom.Settings.Cookie</code>。与原作者的 <code>ComponentService</code> 存储分开，不会覆盖原 Cookie。",
         "<b>Scripting：</b>使用本项目的 1.0.2 或更新版本。启用 BoxJS 时读取本变量；读取失败或关闭 BoxJS 时，仍按原逻辑使用设置页中的手动 Cookie。",

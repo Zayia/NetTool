@@ -73,7 +73,7 @@
     root.ChinaUnicom = carrier;
     if (!$persistentStore.write(JSON.stringify(root), ROOT_KEY)) throw new Error("Write failed");
 
-    $notification.post("中国联通", "小组件凭据已更新", "已保存至 BoxJS：Zayia 组件服务 → 中国联通（hotRecommend）→ 联通 Cookie。");
+    $notification.post("中国联通", "小组件凭据已更新", "已保存至 BoxJS：Zayia 组件服务 → 中国联通→ 联通 Cookie。");
   } catch (_) {
     // 不输出异常对象，避免运行时错误附带 Cookie 或持久化内容。
     console.log("[中国联通] 保存失败，请检查 ZayiaComponentService 数据格式及 Surge 持久化存储。");
