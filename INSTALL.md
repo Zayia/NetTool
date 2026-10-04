@@ -5,9 +5,9 @@
 | 客户端 | 资源地址 | 导入位置 |
 | --- | --- | --- |
 | Surge | [ChinaUnicom.sgmodule](https://raw.githubusercontent.com/Zayia/NetTool/main/surge/ChinaUnicom.sgmodule) | 模块 → 安装新模块 |
-| Egern | [ChinaUnicom.yaml](https://raw.githubusercontent.com/Zayia/NetTool/main/Egern/Module/Component/ChinaUnicom.yaml) | 模块 → 添加远程模块 |
-| Loon | [ChinaUnicom.lpx](https://raw.githubusercontent.com/Zayia/NetTool/main/Loon/Plugin/Component/ChinaUnicom.lpx) | 插件 → 添加插件 |
-| Quantumult X | [ChinaUnicom.conf](https://raw.githubusercontent.com/Zayia/NetTool/main/QuantumultX/Rewrite/Component/ChinaUnicom.conf) | 重写 → 引用远程资源 |
+| Egern | [ChinaUnicom.yaml](https://raw.githubusercontent.com/Zayia/NetTool/main/Egern/ChinaUnicom.yaml) | 模块 → 添加远程模块 |
+| Loon | [ChinaUnicom.lpx](https://raw.githubusercontent.com/Zayia/NetTool/main/Loon/ChinaUnicom.lpx) | 插件 → 添加插件 |
+| Quantumult X | [ChinaUnicom.conf](https://raw.githubusercontent.com/Zayia/NetTool/main/QuantumultX/ChinaUnicom.conf) | 重写 → 引用远程资源 |
 
 这些是模块、插件或重写资源，不是完整代理配置文件。抓取规则只处理联通首页的目标请求头，不需要请求体。
 
@@ -31,9 +31,9 @@ https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxj
 
 ## Scripting
 
-下载并导入：[中國聯通.scripting（1.0.4）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/Release/中國聯通.scripting)。
+下载并导入：[中國聯通.scripting（1.0.5）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中國聯通.scripting)。
 
-中国联通 1.0.4 版的设置页已接入上述安装地址。读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
+中国联通 1.0.5 版的设置页已接入上述安装地址。读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
 
 ## 格式与验证说明
 
