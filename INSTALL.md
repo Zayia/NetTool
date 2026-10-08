@@ -37,13 +37,15 @@ https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxj
 
 ## Scripting
 
-下载并导入：[中國聯通.scripting（1.0.7）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中國聯通.scripting)。移动用户导入：[中國移動.scripting（1.1.1）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中國移動.scripting)。
+下载并导入：[中国联通.scripting（1.0.8）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国联通.scripting)。移动用户导入：[中国移动.scripting（1.1.2）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国移动.scripting)。
 
 两个小组件的设置页均已接入上述统一订阅地址。联通读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
 
+四种客户端中，两套资源分别统一命名为「中国联通组件服务」「中国移动组件服务」。Scripting 显示名称和安装包文件名统一使用简体「中国联通」「中国移动」。若改名后的安装包被识别为新脚本，请确认设置，并将桌面组件绑定到新脚本；BoxJS 凭据变量保持不变。
+
 ### 手动高速流量额度（1.0.6）
 
-1. 运行「中國聯通」，在「通用高速流量配置 → 通用高速流量总量（GB）」填写额度，例如 `40`，也支持 `40.5` 这类小数。留空或填 `0` 关闭兜底。
+1. 运行「中国联通」，在「通用高速流量配置 → 通用高速流量总量（GB）」填写额度，例如 `40`，也支持 `40.5` 这类小数。留空或填 `0` 关闭兜底。
 2. 在「渲染配置」打开「当前：显示剩余百分比」，点击右上角「完成」，刷新小组件。
 3. 套餐没有有效的有限总量时，按手动额度减去接口已用通用流量计算。例如 40 GB 已用 12 GB，显示剩余 28.00 GB、70%；用量超过额度时，剩余显示 0.00 GB。有限套餐优先使用接口总量，即使用完也不会切换成手动额度。
 

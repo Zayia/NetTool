@@ -1,9 +1,9 @@
-/* ChinaMobile 1.3.0-zayia (2026-10-08)
+/* ChinaMobile 1.3.1-zayia (2026-10-08)
  * Based on ChinaTelecomOperators/ChinaMobile 10086.js 1.2.0.
  * Copyright remains with upstream authors. SPDX-License-Identifier: GPL-3.0-only
  * License: https://raw.githubusercontent.com/Zayia/NetTool/main/Scripts/ChinaMobile.LICENSE
  * Modified: readable application layer, isolated storage/route, capture deduplication,
- * notification cooldown, silent widget queries, bounded login retries and safe diagnostics.
+ * notification cooldown, silent widget queries, bounded login retries, cross-client responses and safe diagnostics.
  */
 (function(_0x3aad11, _0x468973) {
   var _0x51a857 = a0_0x4f40, _0x1702b0 = _0x3aad11();
@@ -3464,7 +3464,7 @@
     }
 
 // Zayia application layer, 2026-10-08. GPL-3.0; upstream crypto/runtime retained.
-const mobileTitle = "中国移动余量查询";
+const mobileTitle = "中国移动";
 const mobilePrefix = "zayia_china_mobile_";
 const capturePattern = /^https:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/[LD]N\/(?:uam(?:onekey|randcode)login|realPersonAuthentication)\/autoLogin(?:\?.*)?$/;
 const queryPattern = /^https:\/\/api\.example\.com\/zayia\/10086\/query(?:\?.*)?$/;
@@ -3538,7 +3538,7 @@ function captureMobile() {
   }
   const now = Date.now(), last = Number(readMobile("capture_notice_at", 0));
   if (!silentMode && (!last || now - last >= 10 * 60 * 1000 || now < last)) {
-    _0x26673e(mobileTitle, "✅ 参数已更新", /^1\d{10}$/.test(mobilePhone) ? "已保存本次登录参数" : "请在 Zayia 移动 BoxJS 中填写手机号");
+    _0x26673e(mobileTitle, "✅ 参数已更新", /^1\d{10}$/.test(mobilePhone) ? "已保存本次登录参数" : "请在 BoxJS「Zayia 组件服务 → 中国移动」中填写手机号");
     writeMobile("capture_notice_at", now);
   }
 }
@@ -3582,7 +3582,7 @@ async function requestMobile(endpoint, payload, mode = "1", retried = false, log
   Object.assign(headers, { "x-time": now, "x-nonce": nonce, "x-token": token, "x-sign": md5Mobile(token + "_" + now + "_" + nonce + "_" + session) });
   let result;
   try {
-    result = await _0x2a927b({ url, method: "POST", headers, redirection: false,
+    result = await _0x2a927b({ url, method: "POST", headers, redirection: false, opts: { redirection: false },
       body: encryptMobile(JSON.stringify(body), cfg.key, cfg.iv) });
   } catch { throw new Error("移动接口网络请求失败，请检查网络后重试"); }
   if (!result.ok) throw new Error("移动接口 HTTP 请求失败：" + (result.status || "未知"));
@@ -3605,7 +3605,7 @@ async function requestMobile(endpoint, payload, mode = "1", retried = false, log
   return { ...result, body: json };
 }
 async function queryMobile() {
-  if (!/^1\d{10}$/.test(mobilePhone)) throw new Error("请在 Zayia 移动 BoxJS 中填写正确的手机号");
+  if (!/^1\d{10}$/.test(mobilePhone)) throw new Error("请在 BoxJS「Zayia 组件服务 → 中国移动」中填写正确的手机号");
   if (!allowedModes.includes(encryptionMode) || !encryptedParams || !capturePattern.test(loginURL)) throw new Error("请启用 Zayia 移动模块并打开移动 App 捕获登录参数");
   mobileParams = decodeParams(encryptedParams, encryptionMode);
   mobileParams.tel = mobilePhone;
@@ -3616,7 +3616,8 @@ async function queryMobile() {
   return { fee, plan };
 }
 function finishMobile(status, data) {
-  const response = { status: _0x2585a2 === "Quantumult X" ? "HTTP/1.1 " + status : status,
+  // 统一交给运行时把 Quantumult X 状态码转换为完整 HTTP 状态行。
+  const response = { status,
     headers: { "Content-Type": "application/json;charset=utf-8", "Cache-Control": "no-store" }, body: JSON.stringify(data) };
   _0x3a5cb5(_0x2585a2 === "Quantumult X" ? response : { response });
 }
@@ -3637,7 +3638,7 @@ async function runMobile() {
     else { await mobileNotice(lines.join("\n")); _0x3a5cb5({}); }
   } catch (error) {
     // 不输出请求、签名、Cookie、加密参数或运营商响应原文。
-    const message = error.message && /^(移动接口|加密参数|请在 Zayia|请启用 Zayia|无法刷新 Cookie|登录地址|不支持的移动|保存移动)/.test(error.message)
+    const message = error.message && /^(移动接口|加密参数|请在 BoxJS|请启用 Zayia|无法刷新 Cookie|登录地址|不支持的移动|保存移动)/.test(error.message)
       ? error.message : "查询失败，请更新脚本并重新抓取登录参数";
     console.log(message);
     if (widgetMode) finishMobile(502, { error: message });
