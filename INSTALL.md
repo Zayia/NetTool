@@ -33,9 +33,19 @@ https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxj
 
 ## Scripting
 
-下载并导入：[中國聯通.scripting（1.0.5）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中國聯通.scripting)。
+下载并导入：[中國聯通.scripting（1.0.6）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中國聯通.scripting)。
 
-中国联通 1.0.5 版的设置页已接入上述安装地址。读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
+设置页已接入上述安装地址。读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
+
+### 手动高速流量额度（1.0.6）
+
+1. 运行「中國聯通」，在「通用高速流量配置 → 通用高速流量总量（GB）」填写额度，例如 `40`，也支持 `40.5` 这类小数。留空或填 `0` 关闭兜底。
+2. 在「渲染配置」打开「当前：显示剩余百分比」，点击右上角「完成」，刷新小组件。
+3. 套餐没有有效的有限总量时，按手动额度减去接口已用通用流量计算。例如 40 GB 已用 12 GB，显示剩余 28.00 GB、70%；用量超过额度时，剩余显示 0.00 GB。有限套餐优先使用接口总量，即使用完也不会切换成手动额度。
+
+通用、定向和合计流量统一以 GB 显示，保留两位小数（1 GB = 1024 MB）；关闭剩余开关时显示已用量和已用比例。手动额度只用于通用流量，合计流量按原设置决定是否计入定向。
+
+修改额度后，下次渲染会用缓存中的原始用量重新计算；不会把手动总量写进用量缓存。升级后若仍在使用旧缓存，可先把缓存模式设为「只走网络」刷新一次，再恢复「自动」。桌面刷新时机由 iOS 调度。
 
 ## 格式与验证说明
 
