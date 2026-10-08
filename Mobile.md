@@ -1,23 +1,25 @@
 # 中国移动组件服务 · Zayia
 
-Scripting 1.1.0，代理查询脚本 1.3.0-zayia，更新于 2026-10-08。
+Scripting 1.1.1，代理查询脚本 1.3.0-zayia，更新于 2026-10-08。BoxJS 与中国联通共用「Zayia 组件服务」订阅。
 
 | 文件 | 地址 |
 | --- | --- |
-| BoxJS 订阅 | https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ChinaMobile.boxjs.json |
+| BoxJS 统一订阅（移动、联通） | https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxjs.json |
 | Surge 模块 | https://raw.githubusercontent.com/Zayia/NetTool/main/surge/ChinaMobile.sgmodule |
 | 查询脚本（模块自动加载） | https://raw.githubusercontent.com/Zayia/NetTool/main/Scripts/ChinaMobile.js |
 | Scripting 安装包 | https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中國移動.scripting |
 
 ## 安装
 
-1. 在 BoxJS 添加上表的新订阅，在「Zayia 中国移动 → 中国移动」填写手机号。
+1. 在 BoxJS 添加上表的统一订阅；已有「Zayia 组件服务」时更新订阅即可。在「Zayia 组件服务 → 中国移动」填写手机号。
 2. 在 Surge「配置 → 模块 → 安装新模块」安装上述 `.sgmodule`。启用 MITM 并信任 Surge 证书，停用旧版移动模块，避免两套规则同时捕获。
 3. 打开中国移动 App，触发自动登录请求。首次捕获成功会通知，BoxJS 中加密登录参数、登录地址和加密标识将自动更新。若账号要求风险验证，先在 App 中完成验证后重新捕获。
 4. 下载并导入「中國移動.scripting」。小组件通过当前 Surge 查询数据，查询时需保持对应模块和 MITM 生效。
 5. 无限套餐或无有效总量时，可在 Scripting 设置页「通用高速流量配置」填写总量（GB），打开「显示剩余百分比」并保存。留空或填 0 关闭，支持小数。
 
-添加订阅不会复制原版凭据，需要重新捕获。无需手动填写 Cookie，也无需开启原版「Scriptable 服务模式」。推荐把手机号填在 BoxJS；Surge 模块中填写手机号时，会覆盖本次查询使用的 BoxJS 手机号，并且对通知、面板和组件均生效。
+已有 Zayia 账号数据的用户无需因合并订阅重新捕获：应用 ID 和全部变量名保持不变。原单独的「Zayia 中国移动」订阅已合并到上述地址，确认统一订阅显示数据后可取消旧订阅，请勿清空账号数据。两个 Scripting 小组件的设置页均指向统一订阅。
+
+首次从原作者版本迁入时，添加订阅不会复制原版凭据，需要重新捕获。无需手动填写 Cookie，也无需开启原版「Scriptable 服务模式」。推荐把手机号填在 BoxJS；Surge 模块中填写手机号时，会覆盖本次查询使用的 BoxJS 手机号，并且对通知、面板和组件均生效。
 
 ## 数据与显示
 

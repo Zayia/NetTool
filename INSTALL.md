@@ -1,6 +1,6 @@
 # 中国联通组件服务
 
-中国移动的模块、BoxJS 订阅和 Scripting 安装说明见 [Mobile.md](Mobile.md)。
+中国联通与中国移动共用「Zayia 组件服务」BoxJS 订阅。中国移动的模块和 Scripting 安装说明见 [Mobile.md](Mobile.md)。
 
 选择你正在使用的客户端安装对应资源，启用脚本和 MITM，信任该客户端的 MITM 证书，然后打开中国联通 App 首页触发抓取。
 
@@ -21,7 +21,9 @@
 https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxjs.json
 ```
 
-抓取后，在「Zayia 组件服务 → 中国联通 → 联通 Cookie」查看结果。
+此订阅同时包含「中国联通」和「中国移动」。已有「Zayia 组件服务」时更新订阅即可，无需再添加另一个地址。抓取后，在「Zayia 组件服务 → 中国联通 → 联通 Cookie」查看结果。
+
+合并订阅保留两家的应用 ID 和变量名，已有 Zayia 凭据可继续使用，无需重新抓取。原单独的「Zayia 中国移动」订阅用户请改用上述地址，确认数据正常后取消旧订阅，不要清空账号数据。
 
 抓取脚本 1.0.6 起保留请求中的 `login_type` 原值，包括 `06`、`19` 等，不再限制为 `01`，也不补默认值。更新客户端的模块、插件或重写资源后，重新打开联通 App 首页即可抓取；已有 Scripting 1.0.5 可继续使用。
 
@@ -35,9 +37,9 @@ https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxj
 
 ## Scripting
 
-下载并导入：[中國聯通.scripting（1.0.6）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中國聯通.scripting)。
+下载并导入：[中國聯通.scripting（1.0.7）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中國聯通.scripting)。移动用户导入：[中國移動.scripting（1.1.1）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中國移動.scripting)。
 
-设置页已接入上述安装地址。读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
+两个小组件的设置页均已接入上述统一订阅地址。联通读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
 
 ### 手动高速流量额度（1.0.6）
 

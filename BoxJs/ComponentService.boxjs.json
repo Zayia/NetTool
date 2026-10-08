@@ -2,7 +2,7 @@
   "id": "Zayia.ComponentService",
   "name": "Zayia 组件服务",
   "author": "@Zayia",
-  "description": "联通登录凭据采集，使用独立存储供 Scripting 小组件读取。",
+  "description": "中国联通与中国移动小组件共用订阅，分别保存各自的登录凭据和设置，供 Scripting 小组件使用。",
   "repo": "https://github.com/Zayia/NetTool",
   "apps": [
     {
@@ -13,7 +13,7 @@
         "<b>使用方法：</b>启用对应客户端的模块、插件或重写及 MITM 后，打开联通 App 首页，触发目标请求。自动保存 <code>ecs_token</code>、<code>ecs_acc</code>，以及请求中 <code>login_type</code> 的原值（如 06、19）；不限制为 01，不补默认值。有手机号和版本时也会保留。",
         "<b>独立变量：</b><code>@ZayiaComponentService.ChinaUnicom.Settings.Cookie</code>。与原作者的 <code>ComponentService</code> 存储分开，不会覆盖原 Cookie。",
         "<b>Scripting：</b>使用本项目的 1.0.2 或更新版本。启用 BoxJS 时读取本变量；读取失败或关闭 BoxJS 时，仍按原逻辑使用设置页中的手动 Cookie。",
-        "添加订阅只创建配置入口，不会自动获取或复制旧 Cookie；请更新对应客户端资源后，在联通 App 中重新触发抓取。"
+        "首次从原作者订阅迁入时，不会自动复制原 Cookie，请重新抓取；已有 Zayia 联通凭据保持不变，更新本订阅无需重新抓取。"
       ],
       "icons": [
         "https://github.com/ChinaTelecomOperators/ChinaUnicom/releases/download/Prerelease-Alpha/icon.png",
@@ -30,6 +30,77 @@
           "val": "",
           "placeholder": "打开联通 App 首页后由代理客户端自动写入",
           "desc": "保存 ecs_token、ecs_acc 及抓取到的 login_type 原值组成的 Cookie，供 Scripting 读取。此项属于 BoxJS 变量，不是 Scripting 设置页里的手动 Cookie。"
+        }
+      ]
+    },
+    {
+      "id": "Zayia.ChinaMobile.Account",
+      "name": "中国移动",
+      "author": "ChinaMobileDev, Zayia",
+      "descs_html": [
+        "先填写手机号，再安装 Zayia Surge 模块、启用 MITM 并打开移动 App 捕获登录参数。",
+        "变量继续使用 zayia_china_mobile_ 前缀。原「Zayia 中国移动」订阅中的账号数据可直接沿用，合并订阅无需重新抓取；首次从原作者订阅迁入时才需重新抓取。",
+        "无需手动填写 Cookie：查询时自动获取或刷新。请同时保留加密参数、登录地址、加密标识。",
+        "相同捕获不重复写入；参数变化自动保存，成功通知最多每 10 分钟一次。静默模式关闭抓取和定时通知，小组件后台查询始终不弹通知。"
+      ],
+      "keys": [
+        "zayia_china_mobile_phonenumber",
+        "zayia_china_mobile_params",
+        "zayia_china_mobile_url",
+        "zayia_china_mobile_x_qen",
+        "zayia_china_mobile_cookie",
+        "zayia_china_mobile_silent",
+        "zayia_china_mobile_bark_key",
+        "zayia_china_mobile_capture_notice_at"
+      ],
+      "settings": [
+        {
+          "id": "zayia_china_mobile_phonenumber",
+          "name": "手机号码",
+          "type": "text",
+          "val": ""
+        },
+        {
+          "id": "zayia_china_mobile_params",
+          "name": "加密登录参数（自动捕获）",
+          "type": "textarea",
+          "val": ""
+        },
+        {
+          "id": "zayia_china_mobile_url",
+          "name": "登录地址（自动捕获）",
+          "type": "text",
+          "val": ""
+        },
+        {
+          "id": "zayia_china_mobile_x_qen",
+          "name": "加密标识（自动捕获）",
+          "type": "text",
+          "val": ""
+        },
+        {
+          "id": "zayia_china_mobile_cookie",
+          "name": "Cookie（自动刷新）",
+          "type": "textarea",
+          "val": ""
+        },
+        {
+          "id": "zayia_china_mobile_silent",
+          "name": "静默模式：关闭抓取和定时通知",
+          "type": "boolean",
+          "val": false
+        },
+        {
+          "id": "zayia_china_mobile_bark_key",
+          "name": "Bark Key（可选）",
+          "type": "text",
+          "val": ""
+        }
+      ],
+      "scripts": [
+        {
+          "name": "手动查询移动余量",
+          "script": "https://raw.githubusercontent.com/Zayia/NetTool/main/Scripts/ChinaMobile.js?v=1.3.0"
         }
       ]
     }
