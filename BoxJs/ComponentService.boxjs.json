@@ -38,10 +38,10 @@
       "name": "中国移动",
       "author": "ChinaMobileDev, Zayia",
       "descs_html": [
-        "先填写手机号，再安装当前客户端对应的 Surge / Egern 模块、Loon 插件或 Quantumult X 重写，启用 MITM 并打开移动 App 捕获登录参数。",
-        "变量继续使用 zayia_china_mobile_ 前缀。原「Zayia 中国移动」订阅中的账号数据可直接沿用，合并订阅无需重新抓取；首次从原作者订阅迁入时才需重新抓取。",
-        "无需手动填写 Cookie：查询时自动获取或刷新。请同时保留加密参数、登录地址、加密标识。",
-        "相同捕获不重复写入；参数变化自动保存，成功通知最多每 10 分钟一次。静默模式关闭抓取和定时通知，小组件后台查询始终不弹通知。"
+        "先填写手机号，安装当前客户端的 Surge / Egern 模块、Loon 插件或 Quantumult X 重写，启用 MITM 并打开移动 App 捕获登录参数。",
+        "代理工具只负责抓取。Scripting 1.3.0 起直接查询话费和套餐；优先读取 BoxJS，也可在 Scripting 设置中填写同一账号的完整手动凭据。",
+        "保留 zayia_china_mobile_ 前缀及已有账号变量。更新订阅无需重新抓取。Cookie 可留空，Scripting 自动登录并将新会话保存在本地；BoxJS 中的 Cookie 不再由代理脚本刷新。",
+        "相同捕获不重复写入；参数变化自动保存，成功通知最多每 10 分钟一次。静默模式仅关闭抓取通知。"
       ],
       "keys": [
         "zayia_china_mobile_phonenumber",
@@ -50,7 +50,6 @@
         "zayia_china_mobile_x_qen",
         "zayia_china_mobile_cookie",
         "zayia_china_mobile_silent",
-        "zayia_china_mobile_bark_key",
         "zayia_china_mobile_capture_notice_at"
       ],
       "settings": [
@@ -80,27 +79,16 @@
         },
         {
           "id": "zayia_china_mobile_cookie",
-          "name": "Cookie（自动刷新）",
+          "name": "Cookie（可选）",
           "type": "textarea",
-          "val": ""
+          "val": "",
+          "desc": "可沿用已有会话或留空；Scripting 查询时自动刷新，并保存到 Scripting 本地。"
         },
         {
           "id": "zayia_china_mobile_silent",
-          "name": "静默模式：关闭抓取和定时通知",
+          "name": "静默模式：关闭抓取通知",
           "type": "boolean",
           "val": false
-        },
-        {
-          "id": "zayia_china_mobile_bark_key",
-          "name": "Bark Key（可选）",
-          "type": "text",
-          "val": ""
-        }
-      ],
-      "scripts": [
-        {
-          "name": "手动查询移动余量",
-          "script": "https://raw.githubusercontent.com/Zayia/NetTool/main/Scripts/ChinaMobile.js?v=1.3.1"
         }
       ]
     }

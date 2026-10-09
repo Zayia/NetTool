@@ -37,7 +37,7 @@ https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxj
 
 ## Scripting
 
-下载并导入：[中国联通.scripting（1.0.8）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国联通.scripting)。移动用户导入：[中国移动.scripting（1.2.3）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国移动.scripting)，使用方法见 [Mobile.md](Mobile.md)。
+下载并导入：[中国联通.scripting（1.0.8）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国联通.scripting)。移动用户导入：[中国移动.scripting（1.3.0）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国移动.scripting)，使用方法见 [Mobile.md](Mobile.md)。
 
 两个小组件的设置页均已接入上述统一订阅地址。联通读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
 
@@ -62,3 +62,5 @@ https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxj
 - 已执行本地模拟测试、YAML 解析和远程资源检查。Egern、Loon、Quantumult X 的设备端运行需安装后验证；此前 Surge 抓取已由用户验证。
 
 参考：[原版 Egern YAML](https://github.com/ByteValley/NetTool/blob/main/Egern/Module/Component/ChinaMobile.yaml)、[Loon 插件示例](https://github.com/Loon0x00/LoonExampleConfig/blob/master/Plugin/Plugin_Example.plugin)、[Quantumult X 远程重写示例](https://github.com/crossutility/Quantumult-X/blob/master/sample-import-rewrite.snippet)、[Quantumult X 安装链接规范](https://github.com/crossutility/Quantumult-X/blob/master/url-scheme.md)。
+
+中国移动 1.3.0 起与联通一样由 Scripting 直接查询，支持 BoxJS 优先及手动凭据。升级时请同时更新移动的模块/插件/重写和统一 BoxJS 订阅；代理资源只保留凭据抓取。
