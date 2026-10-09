@@ -49,6 +49,8 @@
 https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxjs.json
 ```
 
+BoxJS 应用 ID 已统一为 `Zayia.Unicom` 和 `Zayia.Mobile`。此次只缩短应用 ID，实际凭据变量及订阅地址保持不变，已有凭据可继续读取。
+
 1. 在当前代理客户端中配置 BoxJS，确认浏览器能够访问 BoxJS。
 2. 在 BoxJS 添加「Zayia 组件服务」订阅；已有此订阅时更新即可。中国移动还需要在订阅的「中国移动」应用中填写手机号。
 3. 安装对应的模块、插件或重写，启用脚本和 MITM，并信任客户端证书。Surge 的导入入口是「配置 → 模块 → 安装新模块」。这些资源不是完整代理配置文件。
@@ -105,7 +107,7 @@ POST https://m.client.10010.com/navigationService/naviService/hotRecommend
 
 | 项目 | 值 |
 | --- | --- |
-| BoxJS 应用 ID | `ZayiaComponentService.ChinaUnicom` |
+| BoxJS 应用 ID | `Zayia.Unicom` |
 | 客户端持久化根键 | `ZayiaComponentService` |
 | BoxJS 字段 ID | `@ZayiaComponentService.ChinaUnicom.Settings.Cookie` |
 | BoxJS 界面位置 | Zayia 组件服务 → 中国联通 → Cookie |
@@ -154,7 +156,7 @@ POST https://m.client.10010.com/navigationService/naviService/hotRecommend
 
 ### BoxJS 存储位置
 
-BoxJS 应用 ID 是 `Zayia.ChinaMobile.Account`，下列字段都是独立持久化键，不放在联通的根对象里。
+BoxJS 应用 ID 是 `Zayia.Mobile`，下列字段都是独立持久化键，不放在联通的根对象里。
 
 | BoxJS 字段名称 | 持久化键 | 来源 |
 | --- | --- | --- |
@@ -363,7 +365,7 @@ Scripting 版本变更时，同步 `script.json`、`index.tsx` 的版本和日�
 
 1. **两个项目都由 Scripting 直接查询。** 中国移动不再使用代理代查接口、旧 bridge、Surge 定时查询或面板，也不再提供旧查询模式切换和自动回退。
 2. **保留 BoxJS 与手动凭据两条路径。** 不能只读取设置页 Cookie，也不能删除手动方式。
-3. **保持已有凭据兼容。** BoxJS 订阅 ID、两家应用 ID、变量键和 Scripting 设置键不能因为统一文字而更名；需要迁移时另行设计。
+3. **保持已有凭据兼容。** 当前应用 ID 为 `Zayia.Unicom` 和 `Zayia.Mobile`。它们与实际凭据存储键独立；此次 ID 统一未修改变量。后续不要因调整文字而修改凭据变量键或 Scripting 设置键，需要迁移时另行设计。
 4. **联通保存 `login_type` 原值。** 不恢复 `login_type === "01"` 限制，不补默认值，不把 `JSESSIONID` 加为联通必需字段。
 5. **保留移动会话协议与账号边界。** 不简化完整 Set-Cookie 的查询参数形式，不混合不同账号凭据，不把有限重试改成无限登录循环。
 6. **保留 GB 显示和手动高速额度兜底。** 有限套餐优先使用接口总量，手动额度只作用于通用流量，不污染缓存中的接口用量。

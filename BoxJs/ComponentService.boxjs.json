@@ -6,7 +6,7 @@
   "repo": "https://github.com/Zayia/NetTool",
   "apps": [
     {
-      "id": "ZayiaComponentService.ChinaUnicom",
+      "id": "Zayia.Unicom",
       "name": "中国联通",
       "descs_html": [
         "配合「中国联通」Surge / Egern 模块、Loon 插件或 Quantumult X 重写，抓取凭据并写入 BoxJS，供 Scripting 直接查询话费和套餐。",
@@ -36,7 +36,7 @@
       "author": "ByteValley, Zayia"
     },
     {
-      "id": "Zayia.ChinaMobile.Account",
+      "id": "Zayia.Mobile",
       "name": "中国移动",
       "author": "ChinaMobileDev, ByteValley, Zayia",
       "icons": [
