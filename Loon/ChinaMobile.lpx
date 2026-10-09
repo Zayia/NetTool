@@ -1,11 +1,11 @@
-#!name=中国移动组件服务
-#!desc=抓取移动登录参数写入 BoxJS，供 Scripting 直接查询话费和套餐。
+#!name=中国移动
+#!desc=从中国移动 App 抓取凭据并写入 BoxJS，供 Scripting 直接查询话费和套餐。
 #!author=ChinaMobileDev, ByteValley, Zayia
 #!tag=组件服务
 
 # 手机号和抓取静默模式在 BoxJS「Zayia 组件服务 → 中国移动」中设置。
 [Script]
-http-request ^https:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/[LD]N\/(?:uam(?:onekey|randcode)login|realPersonAuthentication)\/autoLogin(?:\?.*)?$ script-path=https://raw.githubusercontent.com/Zayia/NetTool/main/Scripts/ChinaMobile.js?v=2.0.0, requires-body=true, timeout=15, tag=移动凭据抓取
+http-request ^https:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/[LD]N\/(?:uam(?:onekey|randcode)login|realPersonAuthentication)\/autoLogin(?:\?.*)?$ script-path=https://raw.githubusercontent.com/Zayia/NetTool/main/Scripts/ChinaMobile.js?v=2.0.1, requires-body=true, timeout=15, tag=中国移动凭据抓取
 
 [MITM]
 hostname = client.app.coc.10086.cn

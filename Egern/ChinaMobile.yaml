@@ -1,11 +1,11 @@
-name: 中国移动组件服务
-description: 抓取移动登录参数写入 BoxJS，供 Scripting 直接查询话费和套餐。
+name: 中国移动
+description: 从中国移动 App 抓取凭据并写入 BoxJS，供 Scripting 直接查询话费和套餐。
 author: ChinaMobileDev, ByteValley, Zayia
 scriptings:
   - http_request:
-      name: 移动凭据抓取
+      name: 中国移动凭据抓取
       match: '^https:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/[LD]N\/(?:uam(?:onekey|randcode)login|realPersonAuthentication)\/autoLogin(?:\?.*)?$'
-      script_url: https://raw.githubusercontent.com/Zayia/NetTool/main/Scripts/ChinaMobile.js?v=2.0.0
+      script_url: https://raw.githubusercontent.com/Zayia/NetTool/main/Scripts/ChinaMobile.js?v=2.0.1
       body_required: true
       max_size: 0
       timeout: 15

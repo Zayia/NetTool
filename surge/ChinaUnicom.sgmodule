@@ -1,10 +1,11 @@
-#!name=中国联通组件服务
-#!desc=从联通 App 抓取 ECS 登录凭据，写入独立的 Zayia BoxJS 变量，供 Scripting 小组件读取（1.0.6）
+#!name=中国联通
+#!desc=从中国联通 App 抓取凭据并写入 BoxJS，供 Scripting 直接查询话费和套餐。
 #!category=组件服务
+#!author=ByteValley, Zayia
 
 # 抓取脚本随本模块从 Zayia/NetTool 加载。
 [Script]
-联通凭据抓取 = type=http-request, pattern=^https:\/\/m\.client\.10010\.com\/navigationService\/naviService\/hotRecommend(?:\?.*)?$, script-path=https://raw.githubusercontent.com/Zayia/NetTool/main/Scripts/ChinaUnicom.js?v=1.0.6, requires-body=false, timeout=5
+中国联通凭据抓取 = type=http-request, pattern=^https:\/\/m\.client\.10010\.com\/navigationService\/naviService\/hotRecommend(?:\?.*)?$, script-path=https://raw.githubusercontent.com/Zayia/NetTool/main/Scripts/ChinaUnicom.js?v=1.0.7, requires-body=false, timeout=5
 
 [MITM]
 hostname = %APPEND% m.client.10010.com

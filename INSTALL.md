@@ -1,4 +1,4 @@
-# 中国联通组件服务
+# 中国联通
 
 中国联通与中国移动共用「Zayia 组件服务」BoxJS 订阅。中国移动的模块和 Scripting 安装说明见 [Mobile.md](Mobile.md)。
 
@@ -21,11 +21,11 @@
 https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxjs.json
 ```
 
-此订阅同时包含「中国联通」和「中国移动」。已有「Zayia 组件服务」时更新订阅即可，无需再添加另一个地址。抓取后，在「Zayia 组件服务 → 中国联通 → 联通 Cookie」查看结果。
+此订阅同时包含「中国联通」和「中国移动」。已有「Zayia 组件服务」时更新订阅即可，无需再添加另一个地址。抓取后，在「Zayia 组件服务 → 中国联通 → Cookie」查看结果。
 
 合并订阅保留两家的应用 ID 和变量名，已有 Zayia 凭据可继续使用，无需重新抓取。原单独的「Zayia 中国移动」订阅用户请改用上述地址，确认数据正常后取消旧订阅，不要清空账号数据。
 
-抓取脚本 1.0.6 起保留请求中的 `login_type` 原值，包括 `06`、`19` 等，不再限制为 `01`，也不补默认值。更新客户端的模块、插件或重写资源后，重新打开联通 App 首页即可抓取；已有 Scripting 1.0.5 可继续使用。
+抓取脚本保留请求中的 `login_type` 原值，包括 `06`、`19` 等，不再限制为 `01`，也不补默认值。更新客户端的模块、插件或重写资源后，重新打开中国联通 App 首页即可抓取。
 
 ```text
 持久化根键：ZayiaComponentService
@@ -37,13 +37,13 @@ https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxj
 
 ## Scripting
 
-下载并导入：[中国联通.scripting（1.0.8）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国联通.scripting)。移动用户导入：[中国移动.scripting（1.3.1）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国移动.scripting)，使用方法见 [Mobile.md](Mobile.md)。
+下载并导入：[中国联通.scripting（1.0.9）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国联通.scripting)。移动用户导入：[中国移动.scripting（1.3.2）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国移动.scripting)，使用方法见 [Mobile.md](Mobile.md)。
 
-两个小组件的设置页均已接入上述统一订阅地址。联通读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
+两个小组件均可从「安装与订阅」添加上述统一订阅，在「凭据来源」配置「从 BoxJS 读取凭据」和「BoxJS 地址」。联通读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
 
-四种客户端中，两套资源分别统一命名为「中国联通组件服务」「中国移动组件服务」。Scripting 显示名称和安装包文件名统一使用简体「中国联通」「中国移动」。若改名后的安装包被识别为新脚本，请确认设置，并将桌面组件绑定到新脚本；BoxJS 凭据变量保持不变。
+Scripting、四种代理客户端资源和 BoxJS 应用统一命名为「中国联通」「中国移动」。JS 通知使用相同名称，抓取规则分别为「中国联通凭据抓取」「中国移动凭据抓取」。共用订阅为「Zayia 组件服务」。本次统一文字不更改安装包文件名、订阅地址或凭据变量。
 
-### 手动高速流量额度（1.0.6）
+### 手动高速流量额度
 
 1. 运行「中国联通」，在「通用高速流量配置 → 通用高速流量总量（GB）」填写额度，例如 `40`，也支持 `40.5` 这类小数。留空或填 `0` 关闭兜底。
 2. 在「渲染配置」打开「当前：显示剩余百分比」，点击右上角「完成」，刷新小组件。
@@ -63,4 +63,8 @@ https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxj
 
 参考：[原版 Egern YAML](https://github.com/ByteValley/NetTool/blob/main/Egern/Module/Component/ChinaMobile.yaml)、[Loon 插件示例](https://github.com/Loon0x00/LoonExampleConfig/blob/master/Plugin/Plugin_Example.plugin)、[Quantumult X 远程重写示例](https://github.com/crossutility/Quantumult-X/blob/master/sample-import-rewrite.snippet)、[Quantumult X 安装链接规范](https://github.com/crossutility/Quantumult-X/blob/master/url-scheme.md)。
 
-中国移动 1.3.0 起与联通一样由 Scripting 直接查询，支持 BoxJS 优先及手动凭据。升级时请同时更新移动的模块/插件/重写和统一 BoxJS 订阅；代理资源只保留凭据抓取。
+中国移动与中国联通均由 Scripting 直接查询，支持 BoxJS 优先及手动凭据。升级时请同时更新移动的模块/插件/重写和统一 BoxJS 订阅；代理资源只保留凭据抓取。
+
+## 抓取通知
+
+中国联通相同凭据不重复写入或通知；凭据变化后保存并通知。中国移动相同凭据也不重复写入或通知，变化后保存，成功通知最多每 10 分钟一次，并支持 BoxJS「静默模式」。

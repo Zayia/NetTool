@@ -1,7 +1,10 @@
-/* China Mobile capture v2.0.0 — GPL-3.0-only.
- * CryptoJS derived from ChinaTelecomOperators/ChinaMobile 10086.js 1.2.0.
- * Build: Scripts/build_mobile.py. License: Scripts/ChinaMobile.LICENSE.
- * Capture only; no login, balance queries, scheduled tasks or network I/O. */
+/* 中国移动 · 凭据抓取 · v2.0.1 · GPL-3.0-only
+ * 从中国移动 App 抓取凭据并写入 BoxJS，供 Scripting 直接查询话费和套餐。
+ * 适用于 Surge / Egern / Loon / Quantumult X。
+ * 来源：ChinaMobileDev, ByteValley；维护：Zayia。
+ * CryptoJS 源自 ChinaTelecomOperators/ChinaMobile 10086.js 1.2.0。
+ * 构建：Scripts/build_mobile.py。许可证：Scripts/ChinaMobile.LICENSE。
+ * 仅抓取凭据，不发起网络请求。 */
 (function () {
 function a0_0x4f40() {} // unused decoder aliases in the upstream crypto library
 const captureCrypto = (function () {
@@ -481,8 +484,9 @@ _0x418d9a["g"] = {};
 _0x418d9a(955);
 return _0x418d9a(21);
 })();
-// China Mobile capture-only application, v2.0.0. GPL-3.0-only.
-// AES validation is provided by the bundled CryptoJS library. No network requests.
+// 中国移动 · 凭据抓取 · v2.0.1 · GPL-3.0-only。
+// 从中国移动 App 抓取凭据并写入 BoxJS，供 Scripting 直接查询话费和套餐。
+// 使用内置 CryptoJS 库校验 AES 加密参数，不发起网络请求。
 (function () {
   const prefix = "zayia_china_mobile_";
   const target = /^https:\/\/client\.app\.coc\.10086\.cn\/biz-orange\/[LD]N\/(?:uam(?:onekey|randcode)login|realPersonAuthentication)\/autoLogin(?:\?.*)?$/;
@@ -496,19 +500,19 @@ return _0x418d9a(21);
     const headerKey = Object.keys(headers).find(key => key.toLowerCase() === "x-qen");
     const mode = String(headerKey ? headers[headerKey] : "");
     const body = $request.body;
-    if (!Object.prototype.hasOwnProperty.call(keys, mode) || typeof body !== "string" || !body) throw new Error("unsupported capture");
+    if (!Object.prototype.hasOwnProperty.call(keys, mode) || typeof body !== "string" || !body) throw new Error("不支持的加密标识或空登录参数");
     const params = JSON.parse(captureCrypto.AES.decrypt(body, captureCrypto.enc.Utf8.parse(keys[mode]), {
       iv: captureCrypto.enc.Utf8.parse(ivs[mode]), mode: captureCrypto.mode.CBC, padding: captureCrypto.pad.Pkcs7,
     }).toString(captureCrypto.enc.Utf8));
-    if (!params?.xk || !params.reqBody || typeof params.reqBody !== "object" || Array.isArray(params.reqBody)) throw new Error("invalid capture");
+    if (!params?.xk || !params.reqBody || typeof params.reqBody !== "object" || Array.isArray(params.reqBody)) throw new Error("登录参数格式无效");
     if (params.reqBody.devToken && params.reqBody.riskToken) {
-      console.log("[中国移动] 请先在 App 完成验证后重新抓取。");
+      console.log("[中国移动] 请先在中国移动 App 完成验证后重新抓取凭据。");
       return;
     }
     const previous = { params: read("params") || "", url: read("url") || "", x_qen: read("x_qen") || "" };
     if (previous.params === body && previous.url === $request.url && String(previous.x_qen) === mode) return;
     try {
-      if (!write("params", body) || !write("url", $request.url) || !write("x_qen", mode)) throw new Error("write failed");
+      if (!write("params", body) || !write("url", $request.url) || !write("x_qen", mode)) throw new Error("凭据写入失败");
     } catch (error) {
       for (const key of Object.keys(previous)) { try { write(key, previous[key]); } catch {} }
       throw error;
@@ -516,13 +520,13 @@ return _0x418d9a(21);
     const silent = /^(true|1|是)$/i.test(String(read("silent") || ""));
     const now = Date.now(), last = Number(read("capture_notice_at") || 0);
     if (!silent && (!last || now - last >= 600000 || now < last)) {
-      const text = /^1\d{10}$/.test(String(read("phonenumber") || "")) ? "已保存登录参数，供 Scripting 直接查询。" : "请在 BoxJS「Zayia 组件服务 → 中国移动」中填写手机号。";
+      const text = /^1\d{10}$/.test(String(read("phonenumber") || "")) ? "已保存至 BoxJS「Zayia 组件服务 → 中国移动」，供 Scripting 直接查询话费和套餐。" : "已保存至 BoxJS「Zayia 组件服务 → 中国移动」，请填写手机号后使用 Scripting 查询。";
       if (typeof $notify === "function") $notify("中国移动", "小组件凭据已更新", text);
       else $notification.post("中国移动", "小组件凭据已更新", text);
       write("capture_notice_at", now);
     }
   } catch {
-    console.log("[中国移动] 捕获或保存失败，请重新打开 App 登录并检查存储。");
+    console.log("[中国移动] 抓取或保存失败，请重新打开中国移动 App 登录并检查客户端持久化存储。");
   } finally { $done({}); }
 })();
 

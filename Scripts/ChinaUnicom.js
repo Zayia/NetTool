@@ -1,6 +1,9 @@
 /*
- * Surge / Egern / Loon / Quantumult X 请求头脚本。
- * 基于 ByteValley 中国联通组件服务的 BoxJS 数据结构。
+ * 中国联通 · 凭据抓取 · v1.0.7
+ * 从中国联通 App 抓取凭据并写入 BoxJS，供 Scripting 直接查询话费和套餐。
+ * 适用于 Surge / Egern / Loon / Quantumult X。
+ * 维护：Zayia。
+ * 基于 ByteValley 中国联通小组件的 BoxJS 数据结构。
  * 只保存小组件使用的字段，不修改请求、不输出凭据、不请求任何外部服务。
  * 持久化根键：ZayiaComponentService
  * BoxJS 字段：@ZayiaComponentService.ChinaUnicom.Settings.Cookie
@@ -22,7 +25,7 @@
   function notifyUpdated() {
     const title = "中国联通";
     const subtitle = "小组件凭据已更新";
-    const message = "已保存至 BoxJS：Zayia 组件服务 → 中国联通 → 联通 Cookie。";
+    const message = "已保存至 BoxJS「Zayia 组件服务 → 中国联通」，供 Scripting 直接查询话费和套餐。";
     if (typeof $notify === "function") {
       $notify(title, subtitle, message);
     } else {
@@ -76,17 +79,17 @@
 
     const stored = readStore(ROOT_KEY);
     const root = stored ? JSON.parse(stored) : {};
-    if (!isObject(root)) throw new Error("Invalid root");
-    if (root.ChinaUnicom != null && !isObject(root.ChinaUnicom)) throw new Error("Invalid carrier");
+    if (!isObject(root)) throw new Error("持久化根数据格式无效");
+    if (root.ChinaUnicom != null && !isObject(root.ChinaUnicom)) throw new Error("中国联通数据格式无效");
     const carrier = root.ChinaUnicom || {};
-    if (carrier.Settings != null && !isObject(carrier.Settings)) throw new Error("Invalid settings");
+    if (carrier.Settings != null && !isObject(carrier.Settings)) throw new Error("凭据设置格式无效");
     const settings = carrier.Settings || {};
     if (settings.Cookie === cookie) return;
 
     settings.Cookie = cookie;
     carrier.Settings = settings;
     root.ChinaUnicom = carrier;
-    if (!writeStore(JSON.stringify(root), ROOT_KEY)) throw new Error("Write failed");
+    if (!writeStore(JSON.stringify(root), ROOT_KEY)) throw new Error("凭据写入失败");
 
     notifyUpdated();
   } catch (_) {

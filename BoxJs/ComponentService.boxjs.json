@@ -2,18 +2,19 @@
   "id": "Zayia.ComponentService",
   "name": "Zayia 组件服务",
   "author": "@Zayia",
-  "description": "中国联通与中国移动小组件共用订阅，分别保存各自的登录凭据和设置，供 Scripting 小组件使用。",
+  "description": "中国联通与中国移动共用订阅：代理客户端抓取凭据并写入 BoxJS，Scripting 读取凭据并直接查询话费和套餐。",
   "repo": "https://github.com/Zayia/NetTool",
   "apps": [
     {
       "id": "ZayiaComponentService.ChinaUnicom",
       "name": "中国联通",
       "descs_html": [
-        "配合 Zayia 的 Surge / Egern / Loon / Quantumult X 资源，在打开中国联通 App 首页时自动提取登录 Cookie。",
-        "<b>使用方法：</b>启用对应客户端的模块、插件或重写及 MITM 后，打开联通 App 首页，触发目标请求。自动保存 <code>ecs_token</code>、<code>ecs_acc</code>，以及请求中 <code>login_type</code> 的原值（如 06、19）；不限制为 01，不补默认值。有手机号和版本时也会保留。",
-        "<b>独立变量：</b><code>@ZayiaComponentService.ChinaUnicom.Settings.Cookie</code>。与原作者的 <code>ComponentService</code> 存储分开，不会覆盖原 Cookie。",
-        "<b>Scripting：</b>使用本项目的 1.0.2 或更新版本。启用 BoxJS 时读取本变量；读取失败或关闭 BoxJS 时，仍按原逻辑使用设置页中的手动 Cookie。",
-        "首次从原作者订阅迁入时，不会自动复制原 Cookie，请重新抓取；已有 Zayia 联通凭据保持不变，更新本订阅无需重新抓取。"
+        "配合「中国联通」Surge / Egern 模块、Loon 插件或 Quantumult X 重写，抓取凭据并写入 BoxJS，供 Scripting 直接查询话费和套餐。",
+        "<b>使用方法：</b>启用对应客户端资源和 MITM，打开中国联通 App 首页抓取凭据，在下方「Cookie」中查看结果。",
+        "<b>Scripting：</b>导入本项目的「中国联通」，开启「从 BoxJS 读取凭据」并填写「BoxJS 地址」；读取失败或关闭时，使用设置页「手动凭据（可选）」中的 Cookie。",
+        "<b>保存内容：</b>同一次请求中的 <code>ecs_token</code>、<code>ecs_acc</code>，以及抓取到的 <code>login_type</code> 原值；有有效手机号和版本时一并保留。变量为 <code>@ZayiaComponentService.ChinaUnicom.Settings.Cookie</code>。",
+        "<b>抓取通知：</b>相同凭据不重复写入或通知；凭据变化后保存并通知。",
+        "<b>更新说明：</b>已有 Zayia 凭据可继续使用，更新订阅无需重新抓取。从原作者订阅迁入或更换代理客户端时，需要重新抓取。"
       ],
       "icons": [
         "https://github.com/ChinaTelecomOperators/ChinaUnicom/releases/download/Prerelease-Alpha/icon.png",
@@ -25,23 +26,26 @@
       "settings": [
         {
           "id": "@ZayiaComponentService.ChinaUnicom.Settings.Cookie",
-          "name": "联通 Cookie",
+          "name": "Cookie",
           "type": "text",
           "val": "",
-          "placeholder": "打开联通 App 首页后由代理客户端自动写入",
-          "desc": "保存 ecs_token、ecs_acc 及抓取到的 login_type 原值组成的 Cookie，供 Scripting 读取。此项属于 BoxJS 变量，不是 Scripting 设置页里的手动 Cookie。"
+          "placeholder": "打开中国联通 App 首页后自动抓取",
+          "desc": "由代理客户端自动写入，供 Scripting 读取；手动填写时需包含同一账号的 ecs_token 和 ecs_acc。"
         }
-      ]
+      ],
+      "author": "ByteValley, Zayia"
     },
     {
       "id": "Zayia.ChinaMobile.Account",
       "name": "中国移动",
-      "author": "ChinaMobileDev, Zayia",
+      "author": "ChinaMobileDev, ByteValley, Zayia",
       "descs_html": [
-        "先填写手机号，安装当前客户端的 Surge / Egern 模块、Loon 插件或 Quantumult X 重写，启用 MITM 并打开移动 App 捕获登录参数。",
-        "代理工具只负责抓取。Scripting 1.3.0 起直接查询话费和套餐；优先读取 BoxJS，也可在 Scripting 设置中填写同一账号的完整手动凭据。",
-        "保留 zayia_china_mobile_ 前缀及已有账号变量。更新订阅无需重新抓取。Cookie 可留空，Scripting 自动登录并将新会话保存在本地；BoxJS 中的 Cookie 不再由代理脚本刷新。",
-        "相同捕获不重复写入；参数变化自动保存，成功通知最多每 10 分钟一次。静默模式仅关闭抓取通知。"
+        "配合「中国移动」Surge / Egern 模块、Loon 插件或 Quantumult X 重写，抓取凭据并写入 BoxJS，供 Scripting 直接查询话费和套餐。",
+        "<b>使用方法：</b>先填写下方「手机号」，启用对应客户端资源和 MITM，打开中国移动 App 登录并抓取凭据，在下方查看结果。",
+        "<b>Scripting：</b>导入本项目的「中国移动」，开启「从 BoxJS 读取凭据」并填写「BoxJS 地址」；读取失败或关闭时，使用设置页「手动凭据（可选）」中的完整凭据。",
+        "<b>保存内容：</b>手机号、加密登录参数、登录地址和加密标识。变量使用 <code>zayia_china_mobile_</code> 前缀。Cookie 可留空，Scripting 自动登录并将新会话保存在本地。",
+        "<b>抓取通知：</b>相同凭据不重复写入或通知；凭据变化后保存，成功通知最多每 10 分钟一次。「静默模式」仅关闭抓取通知。",
+        "<b>更新说明：</b>已有 Zayia 凭据可继续使用，更新订阅无需重新抓取。从原作者订阅迁入或更换代理客户端时，需要填写手机号并重新抓取。"
       ],
       "keys": [
         "zayia_china_mobile_phonenumber",
@@ -55,40 +59,50 @@
       "settings": [
         {
           "id": "zayia_china_mobile_phonenumber",
-          "name": "手机号码",
+          "name": "手机号",
           "type": "text",
-          "val": ""
+          "val": "",
+          "placeholder": "填写中国移动手机号",
+          "desc": "填写 11 位手机号，需与抓取凭据的账号一致。"
         },
         {
           "id": "zayia_china_mobile_params",
-          "name": "加密登录参数（自动捕获）",
+          "name": "加密登录参数",
           "type": "textarea",
-          "val": ""
+          "val": "",
+          "placeholder": "打开中国移动 App 登录后自动抓取",
+          "desc": "由代理客户端自动写入，供 Scripting 读取。"
         },
         {
           "id": "zayia_china_mobile_url",
-          "name": "登录地址（自动捕获）",
+          "name": "登录地址",
           "type": "text",
-          "val": ""
+          "val": "",
+          "placeholder": "打开中国移动 App 登录后自动抓取",
+          "desc": "由代理客户端自动写入，供 Scripting 读取。"
         },
         {
           "id": "zayia_china_mobile_x_qen",
-          "name": "加密标识（自动捕获）",
+          "name": "加密标识",
           "type": "text",
-          "val": ""
+          "val": "",
+          "placeholder": "打开中国移动 App 登录后自动抓取",
+          "desc": "由代理客户端自动写入，支持 2、12 或 14。"
         },
         {
           "id": "zayia_china_mobile_cookie",
           "name": "Cookie（可选）",
           "type": "textarea",
           "val": "",
-          "desc": "可沿用已有会话或留空；Scripting 查询时自动刷新，并保存到 Scripting 本地。"
+          "desc": "可填写同一账号的已有会话；Scripting 自动登录或刷新后的会话保存在 Scripting 本地。",
+          "placeholder": "可留空，由 Scripting 自动登录获取"
         },
         {
           "id": "zayia_china_mobile_silent",
-          "name": "静默模式：关闭抓取通知",
+          "name": "静默模式",
           "type": "boolean",
-          "val": false
+          "val": false,
+          "desc": "开启后关闭抓取通知，凭据变化时仍自动保存。"
         }
       ]
     }
