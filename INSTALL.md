@@ -37,7 +37,7 @@ https://raw.githubusercontent.com/Zayia/NetTool/main/BoxJs/ComponentService.boxj
 
 ## Scripting
 
-下载并导入：[中国联通.scripting（1.0.8）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国联通.scripting)。移动用户导入：[中国移动.scripting（1.3.0）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国移动.scripting)，使用方法见 [Mobile.md](Mobile.md)。
+下载并导入：[中国联通.scripting（1.0.8）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国联通.scripting)。移动用户导入：[中国移动.scripting（1.3.1）](https://raw.githubusercontent.com/Zayia/NetTool/main/Scripting/中国移动.scripting)，使用方法见 [Mobile.md](Mobile.md)。
 
 两个小组件的设置页均已接入上述统一订阅地址。联通读取逻辑仍为 BoxJS 优先，失败时回退本地手动 Cookie；关闭 BoxJS 时直接使用手动 Cookie。
 
