@@ -85,6 +85,8 @@ function finish(title, body) {
 
 /* ---------- 主流程 ---------- */
 var token = $persistentStore.read("github_token");
+console.log("[sync] start token=" + (token ? "set(" + token.length + ")" : "NONE")
+            + " key=" + (SURGE_KEY ? "set" : "NONE"));
 if (!token) {
   finish("失败", "未设置 github_token");
 } else {
