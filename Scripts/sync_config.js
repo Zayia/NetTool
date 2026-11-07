@@ -73,6 +73,46 @@ function b64ToUtf8(b64) {
   return out;
 }
 
+/* ---------- 脱敏字段合并 ---------- */
+// Surge API 会把订阅地址、节点凭据、CA 证书脱敏成 masked / -。
+// 推送前用远端已有的真实值补回来，避免把残缺配置写进仓库。
+function keyOf(line) {
+  var s = line.trim();
+  if (!s || s.charAt(0) === "#" || s.charAt(0) === "[") return null;
+  var i = s.indexOf("=");
+  if (i < 0) return null;
+  return s.substring(0, i).trim();
+}
+
+function isMasked(line) {
+  if (line.indexOf("masked") >= 0) return true;
+  return /=\s*-\s*$/.test(line);
+}
+
+function mergeRemote(localText, remoteText) {
+  if (!remoteText) return localText;
+  var rmap = {}, rlines = remoteText.split("\n"), i, k;
+  for (i = 0; i < rlines.length; i++) {
+    k = keyOf(rlines[i]);
+    if (k) rmap[k] = rlines[i];
+  }
+  var out = [], llines = localText.split("\n"), restored = 0;
+  for (i = 0; i < llines.length; i++) {
+    var line = llines[i];
+    if (isMasked(line)) {
+      k = keyOf(line);
+      if (k && rmap[k] && !isMasked(rmap[k])) {
+        out.push(rmap[k]);
+        restored++;
+        continue;
+      }
+    }
+    out.push(line);
+  }
+  if (restored) console.log("[sync] 从远端保留 " + restored + " 处真实值");
+  return out.join("\n");
+}
+
 /* ---------- 收尾 ---------- */
 var finished = false;
 function finish(title, body) {
@@ -107,6 +147,16 @@ if (!token) {
         finish("失败", "解析配置失败");
         return;
       }
+
+      // Surge API 会把订阅地址脱敏成 https://masked/，
+      // 用 persistentStore 里存的真实地址还原，否则推到仓库的配置是残缺的
+      var realSub = $persistentStore.read("sub_url");
+      if (realSub && profile.indexOf("https://masked/") >= 0) {
+        profile = profile.split("https://masked/").join(realSub);
+        console.log("[sync] 已还原订阅地址 len=" + realSub.length);
+      } else if (profile.indexOf("https://masked/") >= 0) {
+        console.log("[sync] 警告: 订阅地址仍为 masked，未设置 sub_url");
+      }
       if (!profile || profile.indexOf("[General]") < 0) {
         finish("失败", "配置内容异常");
         return;
@@ -133,6 +183,11 @@ if (!token) {
           } else if (e2 || (r2.status !== 404 && r2.status !== 200)) {
             finish("失败", "读取仓库失败 " + (e2 ? "网络错误" : r2.status));
             return;
+          }
+
+          // 用远端已有的真实值补回被 API 脱敏的字段（节点凭据、CA 证书等）
+          if (remote !== null) {
+            profile = mergeRemote(profile, remote);
           }
 
           if (remote !== null && remote === profile) {
